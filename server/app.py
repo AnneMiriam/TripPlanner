@@ -16,7 +16,7 @@ api = Api(app)
 
 @app.route("/")
 def index():
-    return "<h1>Project Server</h1>"
+    return "<h1>Pathfinder Paradise</h1>"
 
 
                                 ################################# User Authentication #################################
