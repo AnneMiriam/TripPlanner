@@ -11,8 +11,6 @@ from config import app, db, api
 # Add your model imports
 from models import User, Destination, Trip
 
-api = Api(app)
-
 # Views go here!
 
 @app.route("/")
@@ -67,7 +65,9 @@ class CheckSession(Resource):
       else:
          return {}, 401
      
- ################################# User #################################
+     
+                                ################################# User #################################
+
      
 class User(Resource):
     def get(self):
@@ -83,6 +83,7 @@ class UsersById(Resource):
         if user:
             return make_response(user.to_dict(), 200)
         return make_response({"error": "User not found"}, 404)
+
 
                                 ################################# Destination #################################
   
@@ -163,6 +164,8 @@ api.add_resource(Signup, "/sign_up")
 api.add_resource(SignIn, "/sign_in")
 api.add_resource(SignOut, "/sign_out")
 api.add_resource(CheckSession, "/check_session")
+api.add_resource(User, "/user")
+api.add_resource(UsersById, '/user/<int:id>')
 api.add_resource(Destinations, '/destination')
 api.add_resource(DestinationId, '/destinations/<int:id>')
 api.add_resource(Trips, "/trips")
