@@ -3,6 +3,7 @@
 # Remote library imports
 from flask import Flask, request, make_response, session, jsonify
 from flask_restful import Resource,  Api
+# from flask_bcrypt import Bcrypt
 
 # Local imports
 from config import app, db, api
@@ -16,7 +17,7 @@ api = Api(app)
 
 @app.route("/")
 def index():
-    return "<h1>Project Server</h1>"
+    return "<h1>Pathfinders Paradise</h1>"
 
 
                                 ################################# User Authentication #################################
@@ -27,8 +28,10 @@ class Signup(Resource):
             data = request.get_json()
             new_user = User(
                 username = data.get("username"),
-                password_hash = data.get("password") 
+                email=data.get("email"), # KLP-added email for sign up 1/23/24
+                # password_hash = data.get("password")  #KLP - commenting out this line to test alternate password has to correct error when seeding db 1/23/24
             )
+            new_user.password.hash = data.get("password")  #KLP added this line to has passwords 1/23/24
             db.session.add(new_user)
             db.session.commit()
             session["user_id"] = new_user.id 
@@ -63,6 +66,23 @@ class CheckSession(Resource):
          return user.to_dict(), 200
       else:
          return {}, 401
+     
+ ################################# User #################################
+     
+class User(Resource):
+    def get(self):
+        try:
+            return make_response([user.to_dict() for user in User.query.all()], 200)
+        except Exception as e:
+            return make_response({"Error": "Could not get data"}, 400)
+        
+
+class UsersById(Resource):
+    def get(self, id):
+        user = User.query.get(id)
+        if user:
+            return make_response(user.to_dict(), 200)
+        return make_response({"error": "User not found"}, 404)
 
                                 ################################# Destination #################################
   
@@ -77,7 +97,7 @@ class Destinations(Resource):
             return make_response({"Error": "Could not get data"}, 400)
         
         
-     def post(self):
+    def post(self):
         try:
             data = request.get_json()
             new_destination = Destination(
@@ -131,7 +151,7 @@ class Trips(Resource):
     def post(self):
         try:
             data = request.get_json()
-             new_trip = Trip(**data)
+            new_trip = Trip(**data)
             db.session.add(new_trip)
             db.session.commit()
             return make_response(mission.to_dict(rules=("user", "destination")), 201)
@@ -142,7 +162,7 @@ class Trips(Resource):
 api.add_resource(Signup, "/sign_up")
 api.add_resource(SignIn, "/sign_in")
 api.add_resource(SignOut, "/sign_out")
-api.add_resource(Check, "/check_session")
+api.add_resource(CheckSession, "/check_session")
 api.add_resource(Destinations, '/destination')
 api.add_resource(DestinationId, '/destinations/<int:id>')
 api.add_resource(Trips, "/trips")
