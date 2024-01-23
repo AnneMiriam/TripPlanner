@@ -10,13 +10,11 @@ from config import app, db, api
 # Add your model imports
 from models import User, Destination, Trip
 
-api = Api(app)
-
 # Views go here!
 
 @app.route("/")
 def index():
-    return "<h1>Project Server</h1>"
+    return "<h1>Pathfinders Paradise</h1>"
 
 
                                 ################################# User Authentication #################################
@@ -63,6 +61,25 @@ class CheckSession(Resource):
          return user.to_dict(), 200
       else:
          return {}, 401
+     
+     
+                                ################################# User #################################
+     
+class User(Resource):
+    def get(self):
+        try:
+            return make_response([user.to_dict() for user in User.query.all()], 200)
+        except Exception as e:
+            return make_response({"Error": "Could not get data"}, 400)
+        
+
+class UsersById(Resource):
+    def get(self, id):
+        user = User.query.get(id)
+        if user:
+            return make_response(user.to_dict(), 200)
+        return make_response({"error": "User not found"}, 404)
+        
 
                                 ################################# Destination #################################
   
@@ -142,7 +159,9 @@ class Trips(Resource):
 api.add_resource(Signup, "/sign_up")
 api.add_resource(SignIn, "/sign_in")
 api.add_resource(SignOut, "/sign_out")
-api.add_resource(Check, "/check_session")
+api.add_resource(CheckSession, "/check_session")
+api.add_resource(User, "/user")
+api.add_resource(UsersById, '/user/<int:id>')
 api.add_resource(Destinations, '/destination')
 api.add_resource(DestinationId, '/destinations/<int:id>')
 api.add_resource(Trips, "/trips")
