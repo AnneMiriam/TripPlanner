@@ -9,8 +9,10 @@ function Home() {
         <NavBar />
       </header>
       <main>
-        <h1>Welcome!</h1>
-        
+          
+          <h1>Pathfinders Paradise</h1>
+          
+          
       </main>
     </>
   );
