@@ -4,13 +4,14 @@
     width: 60px;
     padding: 5px;
     margin: 0 6px 6px;
-    background: blue;
+    background: rgb(255, 255, 255);
     text-decoration: none;
     text-align: center;
-    font-size: min(10vw, 15px) ;
+    font-size: min( 25px) ;
     color: white;
 }
 
 .active {
-    color: red;
+    /* color: rgb(225, 0, 255); */
+    font-size: min( 40px);
 }

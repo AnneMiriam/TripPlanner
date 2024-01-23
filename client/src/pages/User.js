@@ -34,7 +34,9 @@ function User() {
             <input id="password" type="password" name="password" placeholder="Password" />
           </div>
           <br/>
+          
           <button type="submit">Submit</button>
+          <button type="submit">Sign-up</button>
         </form>
         {/* {userList} */}
       </main>
