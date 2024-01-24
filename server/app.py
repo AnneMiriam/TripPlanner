@@ -29,7 +29,7 @@ class Signup(Resource):
                 email=data.get("email"), # KLP-added email for sign up 1/23/24
                 # password_hash = data.get("password")  #KLP - commenting out this line to test alternate password has to correct error when seeding db 1/23/24
             )
-            new_user.password.hash = data.get("password")  #KLP added this line to has passwords 1/23/24
+            new_user._password_hash = data.get("password")
             db.session.add(new_user)
             db.session.commit()
             session["user_id"] = new_user.id 
@@ -69,7 +69,7 @@ class CheckSession(Resource):
                                 ################################# User #################################
 
      
-class User(Resource):
+class Users(Resource):
     def get(self):
         try:
             return make_response([user.to_dict() for user in User.query.all()], 200)
@@ -146,29 +146,59 @@ class DestinationId(Resource):
             return make_response({"message": "Destination deleted successfully."}, 204)
         
         
-                                        ################################# Destination #################################
+                                        ################################# Trip #################################
         
 class Trips(Resource):
+    def get(self):
+        trips = [trip.to_dict() for trip in Trip.query.all()]
+        if not trips:
+            return make_response({"error": "No trips found."}, 404)
+        return make_response(jsonify(trips), 200)
+    
     def post(self):
         try:
             data = request.get_json()
             new_trip = Trip(**data)
             db.session.add(new_trip)
             db.session.commit()
-            return make_response(mission.to_dict(rules=("user", "destination")), 201)
+            return make_response(new_trip.to_dict(), 201)
         except ValueError:
             return make_response({"error": "Missing required data."}, 400)
+        
+
+class TripId(Resource):
+    def get(self, id):
+        trip = Trip.query.get(id)
+        if trip:
+            return make_response(trip.to_dict(), 200)
+        return make_response({"error": "Trip not found."}, 404)
+
+    def patch(self, id):
+        trip = Trip.query.get(id)
+        if not destination:
+            return make_response({"error": "Trip not found."}, 404)
+        else:
+            data = request.get_json()
+            try:
+                for attr, value in data.items():
+                    setattr(trip, attr, value)
+                    db.session.commit()
+                    return make_response(trip.to_dict(), 202)
+            except ValueError:
+                return make_response({"error": "An error occurred while updating the trip."}, 400)
 
 
 api.add_resource(Signup, "/sign_up")
 api.add_resource(SignIn, "/sign_in")
 api.add_resource(SignOut, "/sign_out")
 api.add_resource(CheckSession, "/check_session")
-api.add_resource(User, "/user")
+api.add_resource(Users, "/user")
 api.add_resource(UsersById, '/user/<int:id>')
 api.add_resource(Destinations, '/destination')
 api.add_resource(DestinationId, '/destinations/<int:id>')
-api.add_resource(Trips, "/trips")
+api.add_resource(Trips, '/trips')
+api.add_resource(TripId, '/trips/<int:id>')
+
 
 
 if __name__ == "__main__":

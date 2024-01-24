@@ -23,7 +23,7 @@ class User(db.Model, SerializerMixin):
     destinations = association_proxy("trips", "destination")
 
     # Serialization rules
-    serialize_rules = "-_password_hash"
+    serialize_rules = ("-_password_hash", "trips")
 
     # Validation
 
@@ -84,7 +84,7 @@ class Destination(db.Model, SerializerMixin):
     users = association_proxy("trips", "user")
 
     # Serialization rules
-    serialize_rules = ("-trip.destination", "-users.destinations")
+    serialize_rules = ("-trips",)
 
     # Validation
 
@@ -127,7 +127,7 @@ class Trip(db.Model, SerializerMixin):
     destination = db.relationship("Destination", back_populates="trips")
 
     # Add serialization rules
-    serialize_rules = ("-user.trips", "-destination.trips")
+    serialize_rules = ("-user","-destination")
 
     # Validation
 

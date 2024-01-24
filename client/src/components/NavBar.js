@@ -13,16 +13,16 @@ function NavBar() {
         🏠
       </NavLink>
       <NavLink
-        to="/user"
+        to="/login"
         className="nav-link"
       >
-        🧑
+        🧑🔓
       </NavLink>
       <NavLink
-        to="/trips"
+        to="/signup"
         className="nav-link"
       >
-        ✈️
+        🧑✍️
       </NavLink>
     </nav>
   );
