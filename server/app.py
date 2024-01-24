@@ -164,6 +164,28 @@ class Trips(Resource):
             return make_response(new_trip.to_dict(), 201)
         except ValueError:
             return make_response({"error": "Missing required data."}, 400)
+        
+
+class TripId(Resource):
+    def get(self, id):
+        trip = Trip.query.get(id)
+        if trip:
+            return make_response(trip.to_dict(), 200)
+        return make_response({"error": "Trip not found."}, 404)
+
+    def patch(self, id):
+        trip = Trip.query.get(id)
+        if not destination:
+            return make_response({"error": "Trip not found."}, 404)
+        else:
+            data = request.get_json()
+            try:
+                for attr, value in data.items():
+                    setattr(trip, attr, value)
+                    db.session.commit()
+                    return make_response(trip.to_dict(), 202)
+            except ValueError:
+                return make_response({"error": "An error occurred while updating the trip."}, 400)
 
 
 api.add_resource(Signup, "/sign_up")
@@ -174,7 +196,9 @@ api.add_resource(Users, "/user")
 api.add_resource(UsersById, '/user/<int:id>')
 api.add_resource(Destinations, '/destination')
 api.add_resource(DestinationId, '/destinations/<int:id>')
-api.add_resource(Trips, "/trips")
+api.add_resource(Trips, '/trips')
+api.add_resource(TripId, '/trips/<int:id>')
+
 
 
 if __name__ == "__main__":
