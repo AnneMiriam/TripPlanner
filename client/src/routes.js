@@ -1,8 +1,9 @@
 import Home from "./pages/Home";
 import Trips from "./pages/Trips";
-import User from "./pages/User";
+import Signup from "./pages/Signup";
 import UserProfile from "./pages/UserProfile";
 import ErrorPage from "./pages/ErrorPage";
+import Login from "./pages/Login";
 
 const routes = [
   {
@@ -11,13 +12,13 @@ const routes = [
     errorElement: <ErrorPage />
   }, 
   {
-    path: "/user",
-    element: <User />,
+    path: "/login",
+    element: <Login />,
     errorElement: <ErrorPage />
   },
   {
-    path: "/trips",
-    element: <Trips />,
+    path: "/signup",
+    element: <Signup />,
     errorElement: <ErrorPage />
   },
   {
