@@ -8,6 +8,7 @@ from app import app
 from models import db, User, Trip, Destination
 from custom_provider import CustomProvider
 import hashlib
+import bcrypt
 
 fake = Faker()
 fake.add_provider(CustomProvider)
@@ -42,13 +43,13 @@ with app.app_context():
 
     while len(emails) < 20:
         emails.add(fake.email())
-
+    
     for username, email in zip(usernames, emails):
         raw_password = fake.password(
             length=10, special_chars=True, digits=True, upper_case=True, lower_case=True
-        )
-        user = User(username=username, email=email)
-        user.password_hash = raw_password
+            )
+        hashed_password = bcrypt.hashpw(raw_password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+        user = User(username=username, email=email, _password_hash=hashed_password)
         users.append(user)
     db.session.add_all(users)
 
