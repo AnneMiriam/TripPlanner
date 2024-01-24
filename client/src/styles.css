@@ -2,12 +2,64 @@
 
 body {
   background-color: #0cc0df;
+  /* border: 5px solid black; */
 }
 
 nav {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  /* border: 5px solid green; */
+}
+
+.gridContainer {
+  display: grid;
+  font-family: "Philosopher", sans-serif;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  flex-grow: 1;
+  overflow: auto;
+  /* padding: 20px; */
+  /* border: 5px solid black; */
+}
+
+.column {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 300px;
+  font-size: 25px;
+  margin-left: 50px;
+  margin-right: 50px;
+  align-items: top;
+  color: white;
+}
+
+.homeBackground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 5px solid blue; */
+}
+
+.mainContent {
+  flex: 1;
+  background-image: url("./assets/Logo.png");
+  background-size: contain;
+  background-position: top center;
+  background-repeat: no-repeat;
+  height: 50vh;
+  /* border: 5px solid yellow; */
+}
+
+.home-header {
+  font-family: "Philosopher", sans-serif;
+  text-align: center;
+  color: white;
+  font-size: 75px;
+  background-color: #0cc0df;
+  line-height: 0.5;
+  /* border: 5px solid purple; */
 }
 
 .nav-link {
@@ -19,18 +71,57 @@ nav {
   height: 50px;
   font-size: 24px;
   text-decoration: none;
-  margin-left: 20px;
-  margin-right: 20px;
-  border-radius: 50%;
-  padding: 300px;
+  margin-left: 30px;
+  margin-right: 30px;
+  /* border-radius: 50%; */
+  padding: 30px;
+  /* border: 5px solid red; */
 }
 
-.home-header {
-  font-family: "Philosopher", sans-serif;
-  text-align: center;
-  color: white;
-  font-size: 100px;
-  border-radius: 15%;
-  padding: 10px;
-  background-color: #0cc0df;
+.loginLink {
+  background-image: url("./assets/password.png");
+  background-size: cover;
+  display: block;
+  width: 50px;
+  height: 60px;
+  text-indent: -9999px;
+  /* border: 5px solid orange; */
+}
+
+.loginLink.active {
+  width: 100px;
+  height: 100px;
+  /* border: 5px solid brown; */
+}
+
+.signupLink {
+  background-image: url("./assets/follow.png");
+  background-size: cover;
+  display: block;
+  width: 50px;
+  height: 60px;
+  text-indent: -9999px;
+  /* border: 5px solid white; */
+}
+
+.signupLink.active {
+  width: 100px;
+  height: 100px;
+  /* border: 5px solid lightgreen; */
+}
+
+.homeLink {
+  background-image: url("./assets/home (2).png");
+  background-size: cover;
+  display: block;
+  width: 50px;
+  height: 60px;
+  text-indent: -9999px;
+  /* border: 5px solid lightgray; */
+}
+
+.homeLink.active {
+  width: 100px;
+  height: 100px;
+  /* border: 5px solid darkorchid; */
 }
