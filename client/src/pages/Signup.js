@@ -29,8 +29,14 @@ export default function Signup({ setUser }) {
     <main>
       <NavBar />
       <div>
-        <form onSubmit={handleSubmit}>
-          <div>
+      </div>
+      <div className="signupMain">
+      <div className="logoContainer"></div>
+        <div className="titleContainer">
+          <h1 className='loginTitle'>PATHFINDERS PARADISE</h1>
+        </div>
+        <form className='loginForm' onSubmit={handleSubmit}>
+          <div className='input-container'>
             <label htmlFor="username">Username: </label>
             <input
               value={loginInfo.username}
@@ -39,7 +45,7 @@ export default function Signup({ setUser }) {
               onChange={handleLoginChange}
             />
           </div>
-          <div>
+          <div className='input-container'>
             <label htmlFor="email"> Email: </label>
             <input
               value={loginInfo.email}
@@ -48,7 +54,7 @@ export default function Signup({ setUser }) {
               onChange={handleLoginChange}
             />
           </div>
-          <div>
+          <div className='input-container'>
             <label htmlFor="password">Password: </label>
             <input
               onChange={handleLoginChange}
@@ -58,7 +64,7 @@ export default function Signup({ setUser }) {
               name="password"
             />
             <div>
-              <input type="submit" value="Signup" />
+              <input className='button' type="submit" value="Signup" />
             </div>
           </div>
         </form>

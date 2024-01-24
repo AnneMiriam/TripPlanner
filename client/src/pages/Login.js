@@ -28,20 +28,26 @@ export default function Login({ setUser }) {
   };
 
   return (
-    <main>
+    <main >
       <NavBar />
       <div>
-        <form onSubmit={handleSubmit}>
-          <div>
+      </div>
+      <div className="loginMain">
+        <div className="logoContainer"></div>
+        <div className="titleContainer">
+          <h1 className='loginTitle'>PATHFINDERS PARADISE</h1>
+        </div>
+        <form className="loginForm" onSubmit={handleSubmit}>
+          <div className='loginPage'>
             <label htmlFor="username">Username: </label>
-            <input
+            <input 
               value={loginInfo.username}
               id="username"
               name="username"
               onChange={handleLoginChange}
             />
           </div>
-          <div>
+          <div className='loginPage'>
             <label htmlFor="password">Password: </label>
             <input
               onChange={handleLoginChange}
@@ -51,7 +57,7 @@ export default function Login({ setUser }) {
               name="password"
             />
             <div>
-              <input type="submit" value="Login" />
+              <input className="button" type="submit" value="Login" />
             </div>
           </div>
         </form>
