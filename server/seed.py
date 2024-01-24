@@ -59,7 +59,7 @@ with app.app_context():
         user = rc(users)
         destination = rc(destinations)
         start_date = fake.date_time_this_decade()
-        end_date = fake.date_time_between(start_date=start_date, end_date=start_date + timedelta(days=30))
+        end_date = fake.date_time_between(start_date=start_date, end_date=start_date + timedelta(days=365))
         trip = Trip(
             user = user,
             destination = destination,
