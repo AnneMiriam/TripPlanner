@@ -47,7 +47,8 @@ class User(db.Model, SerializerMixin):
 
     @hybrid_property
     def password_hash(self):
-        raise AttributeError("Password hashes are private.")
+        raise AttributeError("Password hashes are private.") #AH 
+        # return self._password_hash
 
     @password_hash.setter
     def password_hash(self, password):

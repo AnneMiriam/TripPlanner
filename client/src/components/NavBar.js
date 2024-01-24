@@ -21,10 +21,18 @@ function NavBar() {
         🧑🔓
       </NavLink>
       <NavLink
+
         to="/signup"
         className="nav-link signupLink"
         activeClassName="active">
+
         🧑✍️
+      </NavLink>
+      <NavLink
+        to="/trips"
+        className="nav-link"
+      >
+        ✈️
       </NavLink>
     </nav>
   );

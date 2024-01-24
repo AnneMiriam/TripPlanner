@@ -38,34 +38,34 @@ class Signup(Resource):
             return make_response({"error": f"{e}"}, 400)
        
 
-class SignIn(Resource):
-   def post(self):
-      username = request.get_json()["username"]
-      password = request.get_json()["password"]
-      
-      user = User.query.filter_by(username = username).first()
-      if user and user.authenticate(password):
-         session["user_id"] = user.id
-         return user.to_dict(), 200
-      session.clear()
-      return {"error": "Incorrect username or password"}, 401
+class Login(Resource):
+    def post(self):
+        username = request.get_json()["username"]
+        password = request.get_json()["password"]
+        
+        user = User.query.filter_by(username = username).first()
+        if user and user.authenticate(password):
+            session["user_id"] = user.id
+            return user.to_dict(), 200
+        session.clear()
+        return {"error": "Incorrect username or password"}, 401
+    
   
-  
-class SignOut(Resource):
-   def delete(self):
-      session.clear()
-      return {}, 204
+class Logout(Resource):
+    def delete(self):
+        session.clear()
+        return {}, 204
   
 
 class CheckSession(Resource):
-   def get(self):
-      user = User.query.get(session.get("user_id"))
-      if user:
-         return user.to_dict(), 200
-      else:
-         return {}, 401
-     
-     
+    def get(self):
+        user = User.query.get(session.get("user_id"))
+        if user:
+            return user.to_dict(), 200
+        else:
+            return {}, 401
+        
+        
                                 ################################# User #################################
 
      
@@ -189,8 +189,8 @@ class TripId(Resource):
 
 
 api.add_resource(Signup, "/sign_up")
-api.add_resource(SignIn, "/sign_in")
-api.add_resource(SignOut, "/sign_out")
+api.add_resource(Login, "/login")
+api.add_resource(Logout, "/logout")
 api.add_resource(CheckSession, "/check_session")
 api.add_resource(Users, "/user")
 api.add_resource(UsersById, '/user/<int:id>')
