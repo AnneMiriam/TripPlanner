@@ -18,7 +18,7 @@ const routes = [
     errorElement: <ErrorPage />
   },
   {
-    path: "/signup",
+    path: "/sign_up",
     element: <Signup />,
     errorElement: <ErrorPage />
   },

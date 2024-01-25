@@ -35,7 +35,7 @@ const App = () => {
   if (user) {
     view = (
       <Router>
-        <button type='button' onClick={logout}>Logout</button>
+        <button className="button" type='button' onClick={logout}>Logout</button>
         <Routes>
           <Route index element={<User />} />
           <Route path="/trips" element={<Trips />} />
