@@ -9,8 +9,8 @@ function Home() {
       <header>
         <NavBar />
       </header>
-      <div className="gridContainer">
-        <div className="leftColumn column">
+      <div className="homeGridContainer">
+        <div className="leftColumn homeColumn">
           <p> Embark on a world of adventure and let Pathfinders Paradise be your trusty companion.</p>
         </div>
         <main className="homeBackground">
@@ -20,7 +20,7 @@ function Home() {
           <div className="mainContent"></div>
           </div>
         </main>
-        <div className="rightColumn column">
+        <div className="rightColumn homeColumn">
           <p>Start your adventure today – your future self will thank you for the memories!</p>
         </div>
       </div>

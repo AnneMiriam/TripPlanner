@@ -5,6 +5,7 @@ import Login from './Login';
 import Trips from './Trips'
 import Home from './Home';
 import Signup from './Signup';
+import User from './User';
 
 
 const App = () => {
@@ -36,7 +37,7 @@ const App = () => {
       <Router>
         <button type='button' onClick={logout}>Logout</button>
         <Routes>
-          <Route index element={<Home />} />
+          <Route index element={<User />} />
           <Route path="/trips" element={<Trips />} />
           {/* <Route path="/sign_up" element={<Signup />} /> */}
         </Routes>

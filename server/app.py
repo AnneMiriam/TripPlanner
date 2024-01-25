@@ -2,7 +2,8 @@
 
 # Remote library imports
 from flask import Flask, request, make_response, session, jsonify
-from flask_restful import Resource,  Api
+from flask_restful import Resource, Api
+
 # from flask_bcrypt import Bcrypt
 
 # Local imports
@@ -13,49 +14,50 @@ from models import User, Destination, Trip
 
 # Views go here!
 
+
 @app.route("/")
 def index():
     return "<h1>Pathfinders Paradise</h1>"
 
+    ################################# User Authentication #################################
 
-                                ################################# User Authentication #################################
 
 class Signup(Resource):
     def post(self):
         try:
             data = request.get_json()
             new_user = User(
-                username = data.get("username"),
-                email=data.get("email"), # KLP-added email for sign up 1/23/24
+                username=data.get("username"),
+                email=data.get("email"),  # KLP-added email for sign up 1/23/24
                 # password_hash = data.get("password")  #KLP - commenting out this line to test alternate password has to correct error when seeding db 1/23/24
             )
-            new_user._password_hash = data.get("password")
+            new_user.password_hash = data.get("password")
             db.session.add(new_user)
             db.session.commit()
-            session["user_id"] = new_user.id 
+            session["user_id"] = new_user.id
             return make_response(new_user.to_dict(), 201)
         except ValueError as e:
             return make_response({"error": f"{e}"}, 400)
-       
+
 
 class Login(Resource):
     def post(self):
         username = request.get_json()["username"]
         password = request.get_json()["password"]
-        
-        user = User.query.filter_by(username = username).first()
+
+        user = User.query.filter_by(username=username).first()
         if user and user.authenticate(password):
             session["user_id"] = user.id
             return user.to_dict(), 200
         session.clear()
         return {"error": "Incorrect username or password"}, 401
-    
-  
+
+
 class Logout(Resource):
     def delete(self):
         session.clear()
         return {}, 204
-  
+
 
 class CheckSession(Resource):
     def get(self):
@@ -64,18 +66,17 @@ class CheckSession(Resource):
             return user.to_dict(), 200
         else:
             return {}, 401
-        
-        
-                                ################################# User #################################
 
-     
+            ################################# User #################################
+
+
 class Users(Resource):
     def get(self):
         try:
             return make_response([user.to_dict() for user in User.query.all()], 200)
         except Exception as e:
             return make_response({"Error": "Could not get data"}, 400)
-        
+
 
 class UsersById(Resource):
     def get(self, id):
@@ -84,36 +85,37 @@ class UsersById(Resource):
             return make_response(user.to_dict(), 200)
         return make_response({"error": "User not found"}, 404)
 
+        ################################# Destination #################################
 
-                                ################################# Destination #################################
-  
+
 class Destinations(Resource):
     def get(self):
         try:
             destinations = Destination.query.all()
             if not destinations:
                 return make_response({"message": "No destinations found."}, 404)
-            return make_response([destination.to_dict() for destination in destinations], 200)
+            return make_response(
+                [destination.to_dict() for destination in destinations], 200
+            )
         except Exception:
             return make_response({"Error": "Could not get data"}, 400)
-        
-        
+
     def post(self):
         try:
             data = request.get_json()
             new_destination = Destination(
-                name = data.get('name'),
-                description = data.get('description'),
-                location = data.get('location'),
-                image = data.get('image')
+                name=data.get("name"),
+                description=data.get("description"),
+                location=data.get("location"),
+                image=data.get("image"),
             )
             db.session.add(new_destination)
             db.session.commit()
             return make_response(new_destination.to_dict(), 201)
         except ValueError:
             return make_response({"error": "Invalid input data."}, 400)
-        
-        
+
+
 class DestinationId(Resource):
     def get(self, id):
         destination = Destination.query.get(id)
@@ -133,9 +135,10 @@ class DestinationId(Resource):
                     db.session.commit()
                     return make_response(destination.to_dict(), 202)
             except ValueError:
-                return make_response({"error": "An error occurred while updating the destination."}, 400)
-        
-   
+                return make_response(
+                    {"error": "An error occurred while updating the destination."}, 400
+                )
+
     def delete(self, id):
         destination = Destination.query.get(id)
         if not destination:
@@ -144,17 +147,17 @@ class DestinationId(Resource):
             db.session.delete(destination)
             db.session.commit()
             return make_response({"message": "Destination deleted successfully."}, 204)
-        
-        
-                                        ################################# Trip #################################
-        
+
+            ################################# Trip #################################
+
+
 class Trips(Resource):
     def get(self):
         trips = [trip.to_dict() for trip in Trip.query.all()]
         if not trips:
             return make_response({"error": "No trips found."}, 404)
         return make_response(jsonify(trips), 200)
-    
+
     def post(self):
         try:
             data = request.get_json()
@@ -164,7 +167,7 @@ class Trips(Resource):
             return make_response(new_trip.to_dict(), 201)
         except ValueError:
             return make_response({"error": "Missing required data."}, 400)
-        
+
 
 class TripId(Resource):
     def get(self, id):
@@ -185,7 +188,9 @@ class TripId(Resource):
                     db.session.commit()
                     return make_response(trip.to_dict(), 202)
             except ValueError:
-                return make_response({"error": "An error occurred while updating the trip."}, 400)
+                return make_response(
+                    {"error": "An error occurred while updating the trip."}, 400
+                )
 
 
 api.add_resource(Signup, "/sign_up")
@@ -193,14 +198,12 @@ api.add_resource(Login, "/login")
 api.add_resource(Logout, "/logout")
 api.add_resource(CheckSession, "/check_session")
 api.add_resource(Users, "/user")
-api.add_resource(UsersById, '/user/<int:id>')
-api.add_resource(Destinations, '/destination')
-api.add_resource(DestinationId, '/destinations/<int:id>')
-api.add_resource(Trips, '/trips')
-api.add_resource(TripId, '/trips/<int:id>')
-
+api.add_resource(UsersById, "/user/<int:id>")
+api.add_resource(Destinations, "/destination")
+api.add_resource(DestinationId, "/destinations/<int:id>")
+api.add_resource(Trips, "/trips")
+api.add_resource(TripId, "/trips/<int:id>")
 
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
-
