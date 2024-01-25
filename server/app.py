@@ -3,7 +3,7 @@
 # Remote library imports
 from flask import Flask, request, make_response, session, jsonify
 from flask_restful import Resource,  Api
-# from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 # Local imports
 from config import app, db, api
@@ -38,34 +38,34 @@ class Signup(Resource):
             return make_response({"error": f"{e}"}, 400)
        
 
-class Login(Resource):
-    def post(self):
-        username = request.get_json()["username"]
-        password = request.get_json()["password"]
-        
-        user = User.query.filter_by(username = username).first()
-        if user and user.authenticate(password):
-            session["user_id"] = user.id
-            return user.to_dict(), 200
-        session.clear()
-        return {"error": "Incorrect username or password"}, 401
-    
+class SignIn(Resource):
+   def post(self):
+      username = request.get_json()["username"]
+      password = request.get_json()["password"]
+      
+      user = User.query.filter_by(username = username).first()
+      if user and user.authenticate(password):
+         session["user_id"] = user.id
+         return user.to_dict(), 200
+      session.clear()
+      return {"error": "Incorrect username or password"}, 401
   
-class Logout(Resource):
-    def delete(self):
-        session.clear()
-        return {}, 204
+  
+class SignOut(Resource):
+   def delete(self):
+      session.clear()
+      return {}, 204
   
 
 class CheckSession(Resource):
-    def get(self):
-        user = User.query.get(session.get("user_id"))
-        if user:
-            return user.to_dict(), 200
-        else:
-            return {}, 401
-        
-        
+   def get(self):
+      user = User.query.get(session.get("user_id"))
+      if user:
+         return user.to_dict(), 200
+      else:
+         return {}, 401
+     
+     
                                 ################################# User #################################
 
      
@@ -89,15 +89,12 @@ class UsersById(Resource):
   
 class Destinations(Resource):
     def get(self):
-        try:
-            destinations = Destination.query.all()
-            if not destinations:
-                return make_response({"message": "No destinations found."}, 404)
-            return make_response([destination.to_dict() for destination in destinations], 200)
-        except Exception:
-            return make_response({"Error": "Could not get data"}, 400)
-        
-        
+        destinations = [destination.to_dict() for destination in Destination.query.all()]
+        if not destinations:
+            return make_response({"error": "No destinations found."}, 404)
+        return make_response(jsonify(destinations), 200)
+                
+      
     def post(self):
         try:
             data = request.get_json()
@@ -155,14 +152,32 @@ class Trips(Resource):
             return make_response({"error": "No trips found."}, 404)
         return make_response(jsonify(trips), 200)
     
+    
     def post(self):
         try:
             data = request.get_json()
-            new_trip = Trip(**data)
+            
+            print(data)
+            
+            start_date = data.get('startDate')
+            end_date = data.get('endDate')
+            
+            if start_date is None or end_date is None:
+                return make_response({"error": "Missing start_date or end_date."}, 400)
+            
+            new_trip = Trip(
+                occasion=data.get('occasion'),
+                destination_id=Destination.query.filter_by(name=data.get("destination")).first().id,
+                start_date=datetime.strptime(start_date, "%Y-%m-%d"),
+                end_date=datetime.strptime(end_date, "%Y-%m-%d")
+            )
+            
             db.session.add(new_trip)
             db.session.commit()
             return make_response(new_trip.to_dict(), 201)
-        except ValueError:
+        except ValueError as e:
+            return make_response({"error": e.__str__()}, 400)
+        except KeyError:
             return make_response({"error": "Missing required data."}, 400)
         
 
@@ -175,32 +190,45 @@ class TripId(Resource):
 
     def patch(self, id):
         trip = Trip.query.get(id)
-        if not destination:
+        if not trip:
             return make_response({"error": "Trip not found."}, 404)
         else:
             data = request.get_json()
+            data["start_date"]=datetime.strptime(data["start_date"], "%Y-%m-%d")
+            data["end_date"]=datetime.strptime(data["end_date"], "%Y-%m-%d")
             try:
-                for attr, value in data.items():
-                    setattr(trip, attr, value)
-                    db.session.commit()
-                    return make_response(trip.to_dict(), 202)
-            except ValueError:
-                return make_response({"error": "An error occurred while updating the trip."}, 400)
+                for attr in data:
+                    setattr(trip, attr, data[attr])
+                    
+                db.session.add(trip)
+                db.session.commit()
+                
+                return make_response(trip.to_dict(), 202)
+            except ValueError as e:
+                return make_response({"error": e.__str__()}, 400)
+            
+    def delete(self, id):
+        trip = Trip.query.get(id)
+        if not trip:
+            return make_response({"error": "Trip not found."}, 404)
+        else:
+            db.session.delete(trip)
+            db.session.commit()
+            return make_response({"message": "Trip deleted successfully."}, 204)
 
 
 api.add_resource(Signup, "/sign_up")
-api.add_resource(Login, "/login")
-api.add_resource(Logout, "/logout")
+api.add_resource(SignIn, "/sign_in")
+api.add_resource(SignOut, "/sign_out")
 api.add_resource(CheckSession, "/check_session")
 api.add_resource(Users, "/user")
 api.add_resource(UsersById, '/user/<int:id>')
-api.add_resource(Destinations, '/destination')
+api.add_resource(Destinations, '/destinations')
 api.add_resource(DestinationId, '/destinations/<int:id>')
 api.add_resource(Trips, '/trips')
 api.add_resource(TripId, '/trips/<int:id>')
 
-
-
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
+
 
