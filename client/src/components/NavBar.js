@@ -37,12 +37,6 @@ function NavBar() {
 
         🧑✍️
       </NavLink>
-      <NavLink
-        to="/trips"
-        className="nav-link"
-      >
-        ✈️
-      </NavLink>
     </nav>
   );
 }
