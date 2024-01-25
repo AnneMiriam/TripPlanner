@@ -2,16 +2,8 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function CreateTripForm({ setData }) {
+function CreateTripForm({ setData, destinations }) {
   const [refreshPage, setRefreshPage] = useState(false);
-  const [destinations, setDestinations] = useState([]);
-
-  useEffect(() => {
-    fetch("/destinations")
-      .then(response => response.json())
-      .then(data => setDestinations(data))
-      .catch(error => console.error(error));
-  }, []);
 
   const formSchema = yup.object().shape({
     destination: yup.string().required("Must enter destination"),
