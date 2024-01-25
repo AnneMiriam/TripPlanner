@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { useNavigate } from "react-router-dom";
 
 export default function Login({ setUser }) {
   const [loginInfo, setLoginInfo] = useState({ username: "", password: "" });
-  const navigate = useNavigate();
-
+  
+  
   const handleLoginChange = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
@@ -20,34 +19,38 @@ export default function Login({ setUser }) {
       },
       body: JSON.stringify(loginInfo),
     })
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error("Login failed");
+        }
+        return r.json();
+      })
       .then((data) => {
+        localStorage.setItem("user", JSON.stringify(data)); //added this to locally store the user data for the user page
         setUser(data);
-        navigate("/");
       });
   };
 
   return (
-    <main >
+    <main>
       <NavBar />
-      <div>
-      </div>
+      <div></div>
       <div className="loginMain">
         <div className="logoContainer"></div>
         <div className="titleContainer">
-          <h1 className='loginTitle'>PATHFINDERS PARADISE</h1>
+          <h1 className="loginTitle">PATHFINDERS PARADISE</h1>
         </div>
         <form className="loginForm" onSubmit={handleSubmit}>
-          <div className='loginPage'>
+          <div className="loginPage">
             <label htmlFor="username">Username: </label>
-            <input 
+            <input
               value={loginInfo.username}
               id="username"
               name="username"
               onChange={handleLoginChange}
             />
           </div>
-          <div className='loginPage'>
+          <div className="loginPage">
             <label htmlFor="password">Password: </label>
             <input
               onChange={handleLoginChange}

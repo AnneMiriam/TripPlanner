@@ -4,13 +4,16 @@ import "../styles.css";
 import NavBar from "../components/NavBar";
 
 function User() {
+  const userData = JSON.parse(localStorage.getItem('user'));
+
   return (
     <>
       <header>
         <NavBar />
       </header>
       <main className="homeBackground">
-        <h1>Welcome {"username"}</h1>
+        <h1>Welcome {userData?.username}</h1>
+        <p>User ID: {userData?.id}</p>
       </main>
       <div className="homeGridContainer">
         <div className="leftColumn homeColumn">

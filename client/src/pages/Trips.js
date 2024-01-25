@@ -65,13 +65,13 @@ function Trips() {
         <NavBar />
       </header>
       <main>
-        <h1>Please Login to see your Trips!</h1>
+        {/* <h1>Please Login to see your Trips!</h1> */}
         <div>
-          <h3>Recent User Trips</h3>
+          {/* <h3>Recent User Trips</h3> */}
           <p>
-            <strong>Marie578:</strong> Dallas, USA <br></br>
-            <em>Dates:</em> October 2024 <br></br>
-            <em>Occasion:</em> Wedding
+            {/* <strong>Marie578:</strong> Dallas, USA <br></br> */}
+            {/* <em>Dates:</em> October 2024 <br></br> */}
+            {/* <em>Occasion:</em> Wedding */}
           </p>
           <div>
             <CreateTripForm trips={data} />

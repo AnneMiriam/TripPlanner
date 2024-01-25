@@ -14,8 +14,8 @@ from dotenv import load_dotenv
 from config import app, db, api
 
 # Secret Key
-load_dotenv('.env')
-app.secret_key = environ.get('SECRET_KEY')
+load_dotenv(".env")
+app.secret_key = environ.get("SECRET_KEY")
 
 
 # Add your model imports
@@ -99,11 +99,12 @@ class UsersById(Resource):
 
 class Destinations(Resource):
     def get(self):
-        destinations = [destination.to_dict() for destination in Destination.query.all()]
+        destinations = [
+            destination.to_dict() for destination in Destination.query.all()
+        ]
         if not destinations:
             return make_response({"error": "No destinations found."}, 404)
         return make_response(jsonify(destinations), 200)
-      
 
     def post(self):
         try:
@@ -128,7 +129,6 @@ class DestinationId(Resource):
             return make_response(destination.to_dict(), 200)
         return make_response({"error": "Destination not found."}, 404)
 
-                
     def patch(self, id):
         destination = Destination.query.get(id)
         if not destination:
@@ -141,9 +141,10 @@ class DestinationId(Resource):
                     db.session.commit()
                     return make_response(destination.to_dict(), 202)
             except ValueError:
-                return make_response({"error": "An error occurred while updating the destination."}, 400)
-        
-   
+                return make_response(
+                    {"error": "An error occurred while updating the destination."}, 400
+                )
+
     def delete(self, id):
         destination = Destination.query.get(id)
         if not destination:
@@ -152,7 +153,6 @@ class DestinationId(Resource):
             db.session.delete(destination)
             db.session.commit()
             return make_response({"message": "Destination deleted successfully."}, 204)
-        
 
             ################################# Trip #################################
 
@@ -163,27 +163,29 @@ class Trips(Resource):
         if not trips:
             return make_response({"error": "No trips found."}, 404)
         return make_response(jsonify(trips), 200)
-    
-    
+
     def post(self):
         try:
             data = request.get_json()
-            
+
             print(data)
-            
-            start_date = data.get('startDate')
-            end_date = data.get('endDate')
-            
+
+            start_date = data.get("startDate")
+            end_date = data.get("endDate")
+
             if start_date is None or end_date is None:
                 return make_response({"error": "Missing start_date or end_date."}, 400)
-            
+
             new_trip = Trip(
-                occasion=data.get('occasion'),
-                destination_id=Destination.query.filter_by(name=data.get("destination")).first().id,
+                user=User.query.filter_by(username=data.get("username")).first().id,
+                occasion=data.get("occasion"),
+                destination_id=Destination.query.filter_by(name=data.get("destination"))
+                .first()
+                .id,
                 start_date=datetime.strptime(start_date, "%Y-%m-%d"),
-                end_date=datetime.strptime(end_date, "%Y-%m-%d")
+                end_date=datetime.strptime(end_date, "%Y-%m-%d"),
             )
-            
+
             db.session.add(new_trip)
             db.session.commit()
             return make_response(new_trip.to_dict(), 201)
@@ -191,6 +193,7 @@ class Trips(Resource):
             return make_response({"error": e.__str__()}, 400)
         except KeyError:
             return make_response({"error": "Missing required data."}, 400)
+
 
 class TripId(Resource):
     def get(self, id):
@@ -205,19 +208,19 @@ class TripId(Resource):
             return make_response({"error": "Trip not found."}, 404)
         else:
             data = request.get_json()
-            data["start_date"]=datetime.strptime(data["start_date"], "%Y-%m-%d")
-            data["end_date"]=datetime.strptime(data["end_date"], "%Y-%m-%d")
+            data["start_date"] = datetime.strptime(data["start_date"], "%Y-%m-%d")
+            data["end_date"] = datetime.strptime(data["end_date"], "%Y-%m-%d")
             try:
                 for attr in data:
                     setattr(trip, attr, data[attr])
-                    
+
                 db.session.add(trip)
                 db.session.commit()
-                
+
                 return make_response(trip.to_dict(), 202)
             except ValueError as e:
                 return make_response({"error": e.__str__()}, 400)
-            
+
     def delete(self, id):
         trip = Trip.query.get(id)
         if not trip:
