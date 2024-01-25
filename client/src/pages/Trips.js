@@ -5,6 +5,14 @@ import CreateTripForm from "./CreateTripForm";
 
 function Trips() {
   const [data, setData] = useState([]);
+  const [destinations, setDestinations] = useState([]);
+
+  useEffect(() => {
+    fetch("/destinations")
+      .then(response => response.json())
+      .then(data => setDestinations(data))
+      .catch(error => console.error(error));
+  }, []);
 
   useEffect(() => {
     fetch("/trips")
@@ -74,7 +82,11 @@ function Trips() {
             <em>Occasion:</em> Wedding
           </p>
           <div>
-            <CreateTripForm trips={data} setData={setData} />
+            <CreateTripForm
+              trips={data}
+              setData={setData}
+              destinations={destinations}
+            />
             {data.map(trip => (
               <TripDetails
                 key={trip.id}
