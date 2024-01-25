@@ -47,8 +47,7 @@ class User(db.Model, SerializerMixin):
 
     @hybrid_property
     def password_hash(self):
-        raise AttributeError("Password hashes are private.") #AH 
-        # return self._password_hash
+        raise AttributeError("Password hashes are private.")
 
     @password_hash.setter
     def password_hash(self, password):
@@ -132,12 +131,6 @@ class Trip(db.Model, SerializerMixin):
 
     # Validation
 
-    @validates("notes")
-    def validate_notes(self, key, notes):
-        if not isinstance(notes, str):
-            raise ValueError("Notes must be a string.")
-        return notes
-
     @validates("user_id", "destination_id")
     def validate_ids(self, key, id):
         if not isinstance(id, int):
@@ -146,3 +139,4 @@ class Trip(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"Trip #{self.id} | User #{self.user_id}"
+
