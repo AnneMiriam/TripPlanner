@@ -84,7 +84,7 @@ nav {
   background-image: url("./assets/password.png");
   background-size: cover;
   display: block;
-  width: 50px;
+  width: 25px;
   height: 60px;
   text-indent: -9999px;
   /* border: 5px solid orange; */
@@ -100,7 +100,7 @@ nav {
   background-image: url("./assets/follow.png");
   background-size: cover;
   display: block;
-  width: 50px;
+  width: 25px;
   height: 60px;
   text-indent: -9999px;
   /* border: 5px solid white; */
@@ -116,7 +116,7 @@ nav {
   background-image: url("./assets/home (2).png");
   background-size: cover;
   display: block;
-  width: 50px;
+  width: 25px;
   height: 60px;
   text-indent: -9999px;
   /* border: 5px solid lightgray; */
@@ -132,7 +132,7 @@ nav {
   background-image: url("./assets/planeticket.png");
   background-size: cover;
   display: block;
-  width: 50px;
+  width: px;
   height: 60px;
   text-indent: -9999px;
   /* border: 5px solid lightgray; */
@@ -142,4 +142,151 @@ nav {
   width: 100px;
   height: 100px;
   /* border: 5px solid darkorchid; */
+}
+
+/* LOGIN PAGE */
+
+.loginMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  font-size: x-large;
+}
+
+/* Style for input fields */
+.loginForm input[id="username"],
+.loginForm input[type="password"] {
+  width: 80%;
+  height: 20px;
+  padding: 5px 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 1);
+}
+
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+}
+
+.loginPage label,
+.loginPage input {
+  margin-bottom: 10px;
+}
+
+.button {
+  font-family: "Philosopher", sans-serif;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(1, 1, 1, 1);
+  color: black;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right,
+    rgb(230, 78, 230),
+    rgb(117, 72, 189)
+  );
+  background-color: #007bff;
+  margin: 15px;
+}
+
+.logoContainer {
+  background-image: url("./assets/Logo.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 150px 150px;
+}
+
+.loginTitle {
+  color: white;
+  font-size: 50px;
+  margin: 25px;
+}
+
+/* SIGNUP PAGE */
+
+.signupMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  font-size: x-large;
+}
+
+/* Style for input fields */
+.loginForm input[id="username"],
+.loginForm input[id="email"],
+.loginForm input[type="password"] {
+  width: 300px;
+  height: 20px;
+  padding: 5px 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 1);
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input-container label {
+  margin-bottom: 5px;
+}
+
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+}
+
+.loginPage label,
+.loginPage input {
+  margin-bottom: 10px;
+}
+
+.logoContainer {
+  background-image: url("./assets/Logo.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 150px 150px;
+}
+
+.loginTitle {
+  color: white;
+  font-size: 50px;
+  margin: 25px;
 }
