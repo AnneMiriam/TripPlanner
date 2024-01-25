@@ -74,7 +74,7 @@ function Trips() {
             <em>Occasion:</em> Wedding
           </p>
           <div>
-            <CreateTripForm trips={data} />
+            <CreateTripForm trips={data} setData={setData} />
             {data.map(trip => (
               <TripDetails
                 key={trip.id}
