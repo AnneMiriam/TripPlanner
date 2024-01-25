@@ -8,14 +8,13 @@ function NavBar() {
   return (
     <nav>
       {/* <div class="logo"></div> */}
-      {location.pathname === "/user" && (
+      {/* {location.pathname === "/user" && ( */}
         <NavLink
           to="/trips"
           className="nav-link tripLink"
           activeClassName="active">
           ✈️
         </NavLink>
-      )}
       <NavLink
         to="/"
         /* add styling to Navlink */

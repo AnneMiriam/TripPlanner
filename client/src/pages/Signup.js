@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 
 export default function Signup({ setUser }) {
-  const [loginInfo, setLoginInfo] = useState({ username: "", password: "", email: "" });
-  const navigate = useNavigate();
+  const [loginInfo, setLoginInfo] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
   const handleLoginChange = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
@@ -21,22 +24,20 @@ export default function Signup({ setUser }) {
       .then((r) => r.json())
       .then((data) => {
         setUser(data);
-        navigate("/");
       });
   };
 
   return (
     <main>
       <NavBar />
-      <div>
-      </div>
+      <div></div>
       <div className="signupMain">
-      <div className="logoContainer"></div>
+        <div className="logoContainer"></div>
         <div className="titleContainer">
-          <h1 className='loginTitle'>PATHFINDERS PARADISE</h1>
+          <h1 className="loginTitle">PATHFINDERS PARADISE</h1>
         </div>
-        <form className='loginForm' onSubmit={handleSubmit}>
-          <div className='input-container'>
+        <form className="loginForm" onSubmit={handleSubmit}>
+          <div className="input-container">
             <label htmlFor="username">Username: </label>
             <input
               value={loginInfo.username}
@@ -45,7 +46,7 @@ export default function Signup({ setUser }) {
               onChange={handleLoginChange}
             />
           </div>
-          <div className='input-container'>
+          <div className="input-container">
             <label htmlFor="email"> Email: </label>
             <input
               value={loginInfo.email}
@@ -54,7 +55,7 @@ export default function Signup({ setUser }) {
               onChange={handleLoginChange}
             />
           </div>
-          <div className='input-container'>
+          <div className="input-container">
             <label htmlFor="password">Password: </label>
             <input
               onChange={handleLoginChange}
@@ -64,33 +65,27 @@ export default function Signup({ setUser }) {
               name="password"
             />
             <div>
-              <input className='button' type="submit" value="Signup" />
+              <input className="button" type="submit" value="Signup" />
             </div>
           </div>
         </form>
-        <p>Already have an account? <Link to="/login">Login</Link></p>
+        <p>
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
       </div>
     </main>
-    
   );
 }
-
-
-
-
-
 
 // import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import NavBar from '../components/NavBar';
-
 
 // const Signup = () => {
 //   const [username, setUsername] = useState('');
 //   const [email, setEmail] = useState('');
 //   const [password, setPassword] = useState('');
 //   const navigate = useNavigate();
-
 
 //   const handleSignup = () => {
 //     // Add signup logic here (e.g., send data to the server)
