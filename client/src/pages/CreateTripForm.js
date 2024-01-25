@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function CreateTripForm({ trips }) {
+function CreateTripForm({ setData }) {
   const [refreshPage, setRefreshPage] = useState(false);
   const [destinations, setDestinations] = useState([]);
 
@@ -40,15 +40,14 @@ function CreateTripForm({ trips }) {
         body: JSON.stringify(values),
       })
         .then(res => {
-          if (res.status >= 200 && res.status < 300) {
-            return res.json(); // Parse the response body as JSON
+          if (res.status >= 200) {
+            return res.json();
           } else {
             throw new Error("Failed to create trip");
           }
         })
         .then(trip => {
-          // Update the destination state with the new trip
-          setDestinations(prevDestinations => [...prevDestinations, trip]);
+          setData(data => [...data, trip]);
           setRefreshPage(!refreshPage);
 
           // Reset the form
