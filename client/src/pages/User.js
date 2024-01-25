@@ -1,61 +1,41 @@
+// import logo from './assets/PathfindersParadiseLogo.png';
+import React from "react";
+import "../styles.css";
+import NavBar from "../components/NavBar";
 
+function User() {
+  return (
+    <>
+      <header>
+        <NavBar />
+      </header>
+      <main className="homeBackground">
+        <h1>Welcome {"username"}</h1>
+      </main>
+      <div className="homeGridContainer">
+        <div className="leftColumn homeColumn">
+          <p>
+            {" "}
+            Embark on a world of adventure and let Pathfinders Paradise be your
+            trusty companion.
+          </p>
+        </div>
+        <main className="homeBackground">
+          <div>
+            <h1 className="home-header">PATHFINDERS</h1>
+            <h1 className="home-header">PARADISE</h1>
+            <div className="mainContent"></div>
+          </div>
+        </main>
+        <div className="rightColumn homeColumn">
+          <p>
+            Start your adventure today – your future self will thank you for the
+            memories!
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-// import NavBar from "../components/NavBar";
-// // import { useState, useEffect } from "react";
-// // import UserCard from "../components/UserCard";
-
-
-// function User() {
-//   // const [users, setUsers] = useState([])
-
-//   // useEffect(() =>{
-//   //   fetch("/user")
-//   //     .then(r => r.json())
-//   //     .then(data => setUsers(data))
-//   //     .catch(error => console.error(error));
-//   // }, []);
-  
-//   // const userList = users.map(user =>{
-//   //   return <UserCard key={user.id} user={user}/>
-//   // });
-//   return (
-//     <>
-//       <header>
-//         <NavBar />
-//       </header>
-//       <main>
-//         <h1>User Login</h1>
-//         <form>
-//           <div>
-//             <label for="username">Username: </label>
-//             <input id="username" type="text" name="username" placeholder="Username" />
-//           </div>
-//           <br/>
-//           <div>
-//             <label for="password">Password: </label>
-//             <input id="password" type="password" name="password" placeholder="Password" />
-//           </div>
-//           <br/>
-          
-//           <button type="submit">Submit</button>
-//           <button type="submit">Sign-up</button>
-//         </form>
-//         {/* {userList} */}
-//       </main>
-//     </>
-//   );
-// };
-  
-//   export default User;
+export default User;

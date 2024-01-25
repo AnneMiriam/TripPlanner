@@ -4,6 +4,7 @@ import Signup from "./pages/Signup";
 import UserProfile from "./pages/UserProfile";
 import ErrorPage from "./pages/ErrorPage";
 import Login from "./pages/Login";
+import User from "./pages/User";
 
 const routes = [
   {

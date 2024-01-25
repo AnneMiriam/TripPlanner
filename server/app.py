@@ -5,6 +5,7 @@ from flask import Flask, request, make_response, session, jsonify
 from flask_restful import Resource, Api
 from datetime import datetime
 
+
 # from flask_bcrypt import Bcrypt
 
 # Local imports
@@ -95,6 +96,7 @@ class Destinations(Resource):
         if not destinations:
             return make_response({"error": "No destinations found."}, 404)
         return make_response(jsonify(destinations), 200)
+      
 
     def post(self):
         try:
@@ -127,15 +129,14 @@ class DestinationId(Resource):
         else:
             data = request.get_json()
             try:
-                for attr in data:
-                    setattr(destination, attr, data[attr])
-                db.session.add(destination)
-                db.session.commit()
-                
-                return make_response(destination.to_dict(), 202)
-            except ValueError as e:
-                return make_response({"error": e.__str__()}, 400)
-
+                for attr, value in data.items():
+                    setattr(destination, attr, value)
+                    db.session.commit()
+                    return make_response(destination.to_dict(), 202)
+            except ValueError:
+                return make_response({"error": "An error occurred while updating the destination."}, 400)
+        
+   
     def delete(self, id):
         destination = Destination.query.get(id)
         if not destination:
@@ -144,6 +145,7 @@ class DestinationId(Resource):
             db.session.delete(destination)
             db.session.commit()
             return make_response({"message": "Destination deleted successfully."}, 204)
+        
 
             ################################# Trip #################################
 
@@ -182,7 +184,6 @@ class Trips(Resource):
             return make_response({"error": e.__str__()}, 400)
         except KeyError:
             return make_response({"error": "Missing required data."}, 400)
-
 
 class TripId(Resource):
     def get(self, id):

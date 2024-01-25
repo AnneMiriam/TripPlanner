@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function Login({ setUser }) {
   const [loginInfo, setLoginInfo] = useState({ username: "", password: "" });
+  const navigate = useNavigate();
 
   const handleLoginChange = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
@@ -21,6 +23,7 @@ export default function Login({ setUser }) {
       .then((r) => r.json())
       .then((data) => {
         setUser(data);
+        navigate("/");
       });
   };
 
@@ -52,18 +55,13 @@ export default function Login({ setUser }) {
             </div>
           </div>
         </form>
-        <p>Don't have an account? <Link to="/sign_up">Sign Up</Link></p>
+        <p>
+          Don't have an account? <Link to="/sign_up">Sign Up</Link>
+        </p>
       </div>
     </main>
   );
 }
-
-
-
-
-
-
-
 
 // import React, { useState } from 'react';
 // import { useNavigate, Link } from 'react-router-dom';
@@ -111,4 +109,3 @@ export default function Login({ setUser }) {
 // };
 
 // export default Login;
-
