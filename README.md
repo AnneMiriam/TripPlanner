@@ -1,16 +1,11 @@
-# Phase 4 Full-Stack Application Project Template - Trip Planner
+# Trip Planner
 
 # Table of Contents
 
 1. [Creators](#creators)
-1. [Description](#description)
-1. [Features](#features)
+1. [Overview](#overview )
 1. [Installation](#installation)
-1. [Usage](#usage)
 1. [License](#license)
-1. [Acknowledgements](#acknowledgements)
-1. [Contact](#contact)
-
 
 # Creators
 ## Anne Hastings
@@ -28,23 +23,26 @@ Github: https://github.com/Hanna-N9
 LinkedIn: https://www.linkedin.com/in/kimberly-l-palmer/
 Github: https://github.com/kimberlylpalmer 
 
-# Description
+# Overview
 
-Breif description of what our project does and what problem it solves. Why it should be used.
-
-# Features
-
-- Feature 1: Description
-- Feature 2: Description
-- Feature 3: Description
-- etc.
+Trip Planner allows users to log in to access their account by entering their username and password or sign up to create a new account by adding a username, email address, and password. A user can see their list of trips with destination, occasion, start date, and end date. One can use a form to create a new trip, update their information, or delete a trip as one would like. At the end, the log-out button is pressed to login page.
 
 # Installation
-
-Step-by-step instructions on how to get a development environment running.
-
-# Usage
-
+- Fork and clone this repository, and open it in your code editor
+- Open a terminal
+  - Run `pipenv install` to install the dependencies
+  - Run `pipenv shell` to create a virtual environment
+  - Navigate to the server directory by `cd server`
+  - To create a database is to run these commands,
+      - `flask db init`
+      - `flask db migrate -m "Initial migration."`
+      - `flask db upgrade`
+  - Run `python seed.py`
+  - Run `python app.py` to start the server
+- Open another terminal
+  - Navigate to the client directory by `cd client`
+  - Run `npm install` to install dependencies
+  - Run `npm start` to start a server
 
 
 # License 
@@ -70,10 +68,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE Trip Planner OR THE USE OR OTHER DEALINGS IN THE
 Trip Planner.
-
-# Acknowledgements
-
-# Contact
 
 
 
