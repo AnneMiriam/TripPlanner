@@ -97,6 +97,7 @@ function Trips() {
               <TripDetails
                 key={trip.id}
                 trip={trip}
+                destinations={destinations}  //KLP 1/26/24
                 deleteTrip={deleteTrip}
                 updateTrip={updateTrip}
                 data={data}

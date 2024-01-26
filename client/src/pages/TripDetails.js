@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function TripDetails({ trip, deleteTrip, updateTrip, data = [], setData }) {
+function TripDetails({ trip, destinations, deleteTrip, updateTrip, data = [], setData }) {
   const [updatedTrip, setUpdatedTrip] = useState({
     ...trip,
     start_date: new Date(trip.start_date).toISOString().slice(0, 10),
@@ -9,6 +9,8 @@ function TripDetails({ trip, deleteTrip, updateTrip, data = [], setData }) {
   console.log(updatedTrip);
   console.log("Trip object:", trip); // Check the trip object
   console.log("Updated trip state:", updatedTrip); // Check the state
+
+  const destinationName = destinations.find(d => d.id === trip.destination_id)?.name;
 
   function handleDelete() {
     deleteTrip(trip.id);
@@ -49,7 +51,7 @@ function TripDetails({ trip, deleteTrip, updateTrip, data = [], setData }) {
           </tr>
           <tr>
             <th>Destination:</th>
-            <td>{trip.destination}</td>
+            <td>{destinationName}</td>
           </tr>
           <tr>
             <th>Start Date:</th>
