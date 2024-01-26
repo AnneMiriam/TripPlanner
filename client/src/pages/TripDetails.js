@@ -18,14 +18,23 @@ function TripDetails({ trip, destinations, deleteTrip, updateTrip, data = [], se
 
   function handleInputChange(event) {
     const { name, value } = event.target;
-    let parsedValue = value;
+    //KLP
+    if (name === "destination") {
+      // Update the destination_id based on selected destination name
+      const selectedDestination = destinations.find(d => d.name === value);
+      setUpdatedTrip(prevTrip => ({ ...prevTrip, destination_id: selectedDestination.id }));
+    } else {
+      //klp
+      
+      let parsedValue = value;
 
-    // If the input is a date, parse it into a Date object
-    if (["startDate", "endDate"].includes(name)) {
-      parsedValue = new Date(value).toISOString().slice(0, 10);
+      // If the input is a date, parse it into a Date object
+      if (["startDate", "endDate"].includes(name)) {
+        parsedValue = new Date(value).toISOString().slice(0, 10);
+      }
+
+      setUpdatedTrip((prevTrip) => ({ ...prevTrip, [name]: parsedValue }));
     }
-
-    setUpdatedTrip((prevTrip) => ({ ...prevTrip, [name]: parsedValue }));
   }
 
   function handleUpdate() {
@@ -77,12 +86,25 @@ function TripDetails({ trip, destinations, deleteTrip, updateTrip, data = [], se
           value={updatedTrip.occasion}
           onChange={handleInputChange}
         />
-        <input
+        <label htmlFor="destination"></label>
+        <select
+          name="destination"
+          onChange={handleInputChange}
+          value={destinations.find(d => d.id === updatedTrip.destination_id)?.name || ''}
+        >
+          {destinations.map(destination => (
+            <option key={destination.id} value={destination.name}>
+              {destination.name}
+            </option>
+          ))}
+        </select>
+
+        {/* <input
           type="text"
           name="destination"
           value={updatedTrip.destination}
           onChange={handleInputChange}
-        />
+        /> */}
         <input
           type="date"
           name="start_date"
