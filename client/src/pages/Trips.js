@@ -1,11 +1,15 @@
-import NavBar from "../components/NavBar";
 import React, { useEffect, useState } from "react";
+import NavBar from "../components/NavBar";
 import TripDetails from "./TripDetails";
 import CreateTripForm from "./CreateTripForm";
 
 function Trips() {
   const [data, setData] = useState([]);
-  const [destinations, setDestinations] = useState([]);
+  const [destinations, setDestinations] = useState([]); 
+  const [filteredTrips, setFilteredTrips] = useState([]);
+
+  // Retrieve the logged-in user's information (assuming it's stored in local storage)
+  const userId = JSON.parse(localStorage.getItem("user"))?.id;
 
   useEffect(() => {
     fetch("/destinations")
@@ -15,21 +19,23 @@ function Trips() {
   }, []);
 
   useEffect(() => {
-    fetch("/trips")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then(data => setData(data))
-      .catch(error =>
-        console.log(
-          "There has been a problem with your fetch operation: ",
-          error,
-        ),
-      );
-  }, []);
+    if (userId) {
+      fetch("/trips")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then(allTrips => {
+          setData(allTrips);
+          // Filter trips by the logged-in user's ID
+          setFilteredTrips(allTrips.filter(trip => trip.userId === userId));
+        })
+        .catch(error => console.error("Fetch error:", error));
+    }
+  }, [userId]);
+
 
   function updateTrip(updatedTrip) {
     fetch(`/trips/${updatedTrip.id}`, {

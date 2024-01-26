@@ -176,15 +176,35 @@ class Trips(Resource):
             if start_date is None or end_date is None:
                 return make_response({"error": "Missing start_date or end_date."}, 400)
 
+            # check if user exists
+            user = User.query.get(session.get("user_id"))
+            if user is None:
+                return make_response({"error": "User not found."}, 404)
+
+            # Check if destination exists
+            destination = Destination.query.filter_by(
+                name=data.get("destination")
+            ).first()
+            if destination is None:
+                return make_response({"error": "Destination not found."}, 404)
+
             new_trip = Trip(
-                user=User.query.filter_by(username=data.get("username")).first().id,
+                user_id=user.id,
                 occasion=data.get("occasion"),
-                destination_id=Destination.query.filter_by(name=data.get("destination"))
-                .first()
-                .id,
+                destination_id=destination.id,
                 start_date=datetime.strptime(start_date, "%Y-%m-%d"),
                 end_date=datetime.strptime(end_date, "%Y-%m-%d"),
             )
+
+            # new_trip = Trip(
+            #     user=User.query.filter_by(username=data.get("username")).first().id,
+            #     occasion=data.get("occasion"),
+            #     destination_id=Destination.query.filter_by(name=data.get("destination"))
+            #     .first()
+            #     .id,
+            #     start_date=datetime.strptime(start_date, "%Y-%m-%d"),
+            #     end_date=datetime.strptime(end_date, "%Y-%m-%d"),
+            # )
 
             db.session.add(new_trip)
             db.session.commit()
