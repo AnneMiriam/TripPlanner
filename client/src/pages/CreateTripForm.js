@@ -55,6 +55,7 @@ function CreateTripForm({ setData, destinations }) {
       <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }}>
         <label htmlFor="destination">Destination</label>
         <br />
+        <div className="tripForm">
         <select
           id="destination"
           name="destination"
@@ -99,10 +100,10 @@ function CreateTripForm({ setData, destinations }) {
           value={formik.values.occasion}
         />
         <p style={{ color: "red" }}> {formik.errors.occasion}</p>
-
-        <button type="submit">Add Trip</button>
+        </div>
+        <button className="button" type="submit">Add Trip</button>
       </form>
-      <table style={{ padding: "15px" }}>
+      {/* <table style={{ padding: "15px" }}>
         <tbody>
           <tr>
             <th>Destination</th>
@@ -111,7 +112,7 @@ function CreateTripForm({ setData, destinations }) {
             <th>Occasion</th>
           </tr>
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 }
