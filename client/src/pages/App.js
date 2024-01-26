@@ -28,6 +28,10 @@ const App = () => {
       });
   }, []);
 
+  // if (user == undefined) {
+  //   return null;
+  // }
+
   return (
     <Router>
       {user && <LogoutButton setUser={setUser} />}{" "}
