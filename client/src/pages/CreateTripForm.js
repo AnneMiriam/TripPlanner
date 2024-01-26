@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -56,52 +56,54 @@ function CreateTripForm({ setData, destinations }) {
         <label htmlFor="destination">Destination</label>
         <br />
         <div className="tripForm">
-        <select
-          id="destination"
-          name="destination"
-          onChange={formik.handleChange}
-          value={formik.values.destination}>
-          {destinations.map(destination => (
-            <option key={destination.id} value={destination.name}>
-              {destination.name}
-            </option>
-          ))}
-        </select>
-        <p style={{ color: "red" }}> {formik.errors.destination}</p>
+          <select
+            id="destination"
+            name="destination"
+            onChange={formik.handleChange}
+            value={formik.values.destination}>
+            {destinations.map(destination => (
+              <option key={destination.id} value={destination.name}>
+                {destination.name}
+              </option>
+            ))}
+          </select>
+          <p style={{ color: "red" }}> {formik.errors.destination}</p>
 
-        <label htmlFor="startDate">Start Date</label>
-        <br />
-        <input
-          id="startDate"
-          name="startDate"
-          type="date"
-          onChange={formik.handleChange}
-          value={formik.values.startDate}
-        />
-        <p style={{ color: "red" }}> {formik.errors.startDate}</p>
+          <label htmlFor="startDate">Start Date</label>
+          <br />
+          <input
+            id="startDate"
+            name="startDate"
+            type="date"
+            onChange={formik.handleChange}
+            value={formik.values.startDate}
+          />
+          <p style={{ color: "red" }}> {formik.errors.startDate}</p>
 
-        <label htmlFor="endDate">End Date</label>
-        <br />
-        <input
-          id="endDate"
-          name="endDate"
-          type="date"
-          onChange={formik.handleChange}
-          value={formik.values.endDate}
-        />
-        <p style={{ color: "red" }}> {formik.errors.endDate}</p>
+          <label htmlFor="endDate">End Date</label>
+          <br />
+          <input
+            id="endDate"
+            name="endDate"
+            type="date"
+            onChange={formik.handleChange}
+            value={formik.values.endDate}
+          />
+          <p style={{ color: "red" }}> {formik.errors.endDate}</p>
 
-        <label htmlFor="occasion">Occasion</label>
-        <br />
-        <input
-          id="occasion"
-          name="occasion"
-          onChange={formik.handleChange}
-          value={formik.values.occasion}
-        />
-        <p style={{ color: "red" }}> {formik.errors.occasion}</p>
+          <label htmlFor="occasion">Occasion</label>
+          <br />
+          <input
+            id="occasion"
+            name="occasion"
+            onChange={formik.handleChange}
+            value={formik.values.occasion}
+          />
+          <p style={{ color: "red" }}> {formik.errors.occasion}</p>
         </div>
-        <button className="button" type="submit">Add Trip</button>
+        <button className="button" type="submit">
+          Add Trip
+        </button>
       </form>
       {/* <table style={{ padding: "15px" }}>
         <tbody>
