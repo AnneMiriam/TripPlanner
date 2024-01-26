@@ -86,7 +86,7 @@ function TripDetails({ trip, destinations, deleteTrip, updateTrip, data = [], se
           value={updatedTrip.occasion}
           onChange={handleInputChange}
         />
-        <label htmlFor="destination"></label>
+        <label htmlFor="destination">Destination</label>
         <select
           name="destination"
           onChange={handleInputChange}
