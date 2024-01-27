@@ -4,8 +4,7 @@ import NavBar from "../components/NavBar";
 
 export default function Login({ setUser }) {
   const [loginInfo, setLoginInfo] = useState({ username: "", password: "" });
-  
-  
+
   const handleLoginChange = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
@@ -28,6 +27,9 @@ export default function Login({ setUser }) {
       .then((data) => {
         localStorage.setItem("user", JSON.stringify(data)); //added this to locally store the user data for the user page
         setUser(data);
+      })
+      .catch((e) => {
+        console.error(e);
       });
   };
 
