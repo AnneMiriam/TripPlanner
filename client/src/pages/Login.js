@@ -4,8 +4,7 @@ import NavBar from "../components/NavBar";
 
 export default function Login({ setUser }) {
   const [loginInfo, setLoginInfo] = useState({ username: "", password: "" });
-  
-  
+
   const handleLoginChange = (e) => {
     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
   };
