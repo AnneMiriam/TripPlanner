@@ -159,10 +159,12 @@ class DestinationId(Resource):
 
 class Trips(Resource):
     def get(self):
-        trips = [trip.to_dict() for trip in Trip.query.all()]
-        if not trips:
-            return make_response({"error": "No trips found."}, 404)
-        return make_response(jsonify(trips), 200)
+        user = User.query.get(session.get("user_id"))
+        if user:            
+            trips = [trip.to_dict() for trip in user.trips]
+            return make_response(jsonify(trips), 200)
+        return make_response({"error": "Must be logged in to view trips."}, 401)
+            
 
     def post(self):
         try:

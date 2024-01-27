@@ -28,6 +28,9 @@ export default function Login({ setUser }) {
       .then((data) => {
         localStorage.setItem("user", JSON.stringify(data)); //added this to locally store the user data for the user page
         setUser(data);
+      })
+      .catch((e) => {
+        console.error(e);
       });
   };
 
